@@ -72,6 +72,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /*.backup
 
-# Ignore large files exceeding GitHub's file size limit
-Library/PackageCache/com.unity.burst@1.8.9/.Runtime/libburst-llvm-15.dylib
-Library/ArtifactDB
+# BigAssets
+/Assets/_Dev/College Library/
+/Assets/_Dev/Apartment Kit/
+/Assets/_Dev/Brick Project Studio/
