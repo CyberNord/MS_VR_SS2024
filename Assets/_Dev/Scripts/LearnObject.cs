@@ -4,6 +4,7 @@ namespace _Dev.Scripts
 {
     public class LearnObject
     {
+        private static int _nextId = 1;
         private readonly GameObject _asset;
         private readonly int _id; 
         private readonly AudioClip _audioClipEnglish; 
@@ -27,6 +28,7 @@ namespace _Dev.Scripts
             AudioClip audioClipVimmi, string descGerman, string descEnglish, string descVimmi)
         {
             _asset = asset;
+            _id = _nextId++;
             _audioClipEnglish = audioClipEnglish;
             _audioClipGerman = audioClipGerman;
             _audioClipVimmi = audioClipVimmi;
