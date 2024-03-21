@@ -4193,6 +4193,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basket 1
       objectReference: {fileID: 0}
+    - target: {fileID: 165922, guid: 975da3ed9b4e81549a02e5e08d19369b, type: 3}
+      propertyPath: m_TagString
+      value: Trigger
+      objectReference: {fileID: 0}
     - target: {fileID: 474082, guid: 975da3ed9b4e81549a02e5e08d19369b, type: 3}
       propertyPath: m_LocalScale.x
       value: 16.34502
@@ -4269,6 +4273,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1653844036}
+    - targetCorrespondingSourceObject: {fileID: 165922, guid: 975da3ed9b4e81549a02e5e08d19369b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1653844040}
   m_SourcePrefab: {fileID: 100100000, guid: 975da3ed9b4e81549a02e5e08d19369b, type: 3}
 --- !u!4 &1653844032 stripped
 Transform:
@@ -4381,6 +4389,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.029043106, y: 0.0020460354, z: 0.020175735}
   m_Center: {x: 0.00028230032, y: 0.013187435, z: -0.010081313}
+--- !u!114 &1653844040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548847221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f9b6715f1eaf94a9439f3e977c0a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 10
 --- !u!1 &1739779760
 GameObject:
   m_ObjectHideFlags: 0
@@ -4941,6 +4962,7 @@ GameObject:
   - component: {fileID: 1900922562}
   - component: {fileID: 1900922561}
   - component: {fileID: 1900922568}
+  - component: {fileID: 1900922569}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -5159,6 +5181,19 @@ MonoBehaviour:
   _pointable: {fileID: 1900922564}
   _rigidbody: {fileID: 1900922561}
   _scaleMassWithSize: 1
+--- !u!114 &1900922569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900922559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f9b6715f1eaf94a9439f3e977c0a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 5
 --- !u!1001 &1950706254
 PrefabInstance:
   m_ObjectHideFlags: 0
