@@ -5,11 +5,11 @@ using Random = System.Random;
 
 namespace _Dev.Scripts
 {
-    public class Database
+    public class LearnObjectManager
     {
         private readonly List<LearnObject> _learnObjects;
 
-        public Database(List<LearnObject> initialLearnObjects = null)
+        public LearnObjectManager(List<LearnObject> initialLearnObjects = null)
         {
             _learnObjects = initialLearnObjects ?? new List<LearnObject>();
         }
