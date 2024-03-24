@@ -1,1 +1,0 @@
-Kugel,Sphere,yxc
