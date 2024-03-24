@@ -14,7 +14,7 @@ namespace _Dev.Scripts.db
             _learnObjectManager = learnObjectManager;
         }
         
-        private List<string> getResFolders()
+        private static List<string> GetResFolders()
         {
             var path = Path.Combine(Application.dataPath, Constants.ResourcesPath);
             
@@ -39,7 +39,7 @@ namespace _Dev.Scripts.db
 
         public void InitializeDefaultLearnObjects()
         {
-            List<string> resLearnObj = getResFolders();
+            List<string> resLearnObj = GetResFolders();
 
             foreach (var fName in resLearnObj)
             {
