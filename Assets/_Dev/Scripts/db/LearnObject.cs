@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Dev.Scripts
+namespace _Dev.Scripts.db
 {
     public class LearnObject
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = System.Random;
 
-namespace _Dev.Scripts
+namespace _Dev.Scripts.db
 {
     public class LearnObjectManager
     {

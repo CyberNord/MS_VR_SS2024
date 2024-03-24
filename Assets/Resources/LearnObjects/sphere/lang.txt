@@ -1,3 +1,1 @@
-Kugel
-Sphere
-yxc
+Kugel,Sphere,yxc

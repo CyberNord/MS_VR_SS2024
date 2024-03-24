@@ -1,31 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
-using _Dev.Scripts;
+using _Dev.Scripts.db;
 using UnityEngine;
 
-public class AppInitializer : MonoBehaviour
+namespace _Dev.Scripts
 {
-    private LearnObjectManager lm;
-    public GameObject go;
+    public class AppInitializer : MonoBehaviour
+    {
+        private LearnObjectManager lm;
+        public GameObject go;
 
-    public GameObject lm_pos;
-    public GameObject go_pos;
+        public GameObject lm_pos;
+        public GameObject lm_pos2;
+        public GameObject go_pos;
     
     
-    // Start is called before the first frame update
-    void Start()
-    {
+        // Start is called before the first frame update
+        void Start()
+        {
 
-        lm = new LearnObjectManager(); 
-        new LearnObjectInitializer(lm).InitializeDefaultLearnObjects();
-        Instantiate(lm.GetLearnObjectGroups(1)[0][0].Asset,lm_pos.transform.position,Quaternion.identity);
-        Instantiate(go,go_pos.transform.position,Quaternion.identity); 
+            lm = new LearnObjectManager(); 
+            new LearnObjectInitializer(lm).InitializeDefaultLearnObjects();
+            
+            // Instanciate from Resource Folder 1
+            Instantiate(lm.GetLearnObjectGroups(1)[1][0].Asset,     // in a List of lists ... Zukunftsrudi simplify pls
+                lm_pos.transform.position,                                  // Position (a placeholder object in scene
+                Quaternion.identity                                         // Rotation
+                );                   
+            
+            Instantiate(lm.GetLearnObjectGroups(1)[0][0].Asset,lm_pos2.transform.position,Quaternion.identity); // Instanciate from Resource Folder 1
+            
+            Instantiate(go,go_pos.transform.position,Quaternion.identity); // Instanciate from Prefab
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
     }
 }
