@@ -1528,6 +1528,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &309508525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 309508526}
+  m_Layer: 0
+  m_Name: LearnObjectPath2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &309508526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309508525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.117, y: 0.736, z: 4.752}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1616868274}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &310238959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3187,6 +3218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go: {fileID: 6399622375685189085, guid: ff96667ce84637746862994ca5388e0e, type: 3}
   lm_pos: {fileID: 822814662}
+  lm_pos2: {fileID: 309508525}
   go_pos: {fileID: 1015984613}
 --- !u!4 &1132481828
 Transform:
@@ -4037,6 +4069,7 @@ Transform:
   m_Children:
   - {fileID: 1015984614}
   - {fileID: 822814663}
+  - {fileID: 309508526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1739779760
