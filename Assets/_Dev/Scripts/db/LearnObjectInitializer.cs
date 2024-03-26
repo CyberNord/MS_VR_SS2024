@@ -37,6 +37,7 @@ namespace _Dev.Scripts.db
             }
         }
 
+        // Get all LearnObjects from Resource folder
         public void InitializeDefaultLearnObjects()
         {
             List<string> resLearnObj = GetResFolders();
@@ -46,7 +47,7 @@ namespace _Dev.Scripts.db
                 Debug.Log("ResFolderAsset " + fName);
                 TextAsset vocabTextAsset = Resources.Load<TextAsset>("LearnObjects/" + fName + "/" + Constants.VocabelTextFile);
                 string[] names = vocabTextAsset != null ? vocabTextAsset.text.Split(',') : new string[] {"", "", ""};
-                if (names.Length >= 3)
+                if (names.Length >= 3) // Check if all three languages are present
                 {
                     _learnObjectManager.AddLearnObject(
                         new LearnObject(
