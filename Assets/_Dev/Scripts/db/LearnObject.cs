@@ -36,5 +36,10 @@ namespace _Dev.Scripts.db
             _descEnglish = descEnglish;
             _descVimmi = descVimmi;
         }
+
+        public override string ToString()
+        {
+            return "ID = " + Id + "\nDescEng = " + DescEnglish ;
+        }
     }
 }
