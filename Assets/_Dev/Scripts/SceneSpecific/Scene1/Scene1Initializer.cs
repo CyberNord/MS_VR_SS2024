@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Scene1Initializer : MonoBehaviour
 {
@@ -75,6 +76,20 @@ public class Scene1Initializer : MonoBehaviour
         if (germanTextComponent != null)
         {
             germanTextComponent.text = lo.DescGerman;
+        }
+
+        Button audioButton = canvas.GetComponentInChildren<Button>();
+        if (audioButton != null)
+        {
+            audioButton.onClick.AddListener(() => PlayAudio(lo.AudioClipEnglish));
+        }
+    }
+
+    void PlayAudio(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
         }
     }
 }
