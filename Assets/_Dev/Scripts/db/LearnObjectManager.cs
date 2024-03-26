@@ -32,6 +32,14 @@ namespace _Dev.Scripts.db
             }
         }
         
+        
+        public List<LearnObject> GetAllLearnObjects()
+        {
+            return _learnObjects.OrderBy(lo => lo.Id).ToList();
+            
+        }
+        
+        
         // flexible grouping
         public List<LearnObject>[] GetLearnObjectGroups(int groupSize)
         {
