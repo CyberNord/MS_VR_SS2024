@@ -1,4 +1,5 @@
 using _Dev.Scripts.db;
+using _Dev.Scripts.ObjectBehaviour;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,16 +55,24 @@ public class Scene1Initializer : MonoBehaviour
     {
         GameObject obj = Instantiate(lo.Asset, lmPosition.transform.position, Quaternion.identity);
 
+        obj.AddComponent<DestroyObject>();
+
         // Adjust position and instantiate the canvas
         Vector3 canvasPosition = lmPosition.transform.position + new Vector3(0, 0.5f, 0.5f);
         GameObject canvas = Instantiate(canvasPrefab, canvasPosition, Quaternion.identity);
-        canvas.transform.SetParent(obj.transform);
 
-        //Rotate the object
         if (rotateObject)
         {
             obj.transform.Rotate(Vector3.up, rotationAngle);
+            canvas.transform.Rotate(Vector3.up, rotationAngle);
+
+            if (rotationAngle == 270)
+                canvas.transform.position = lmPosition.transform.position + new Vector3(-0.4f, 0.5f, 0);
+            else if (rotationAngle == 90)
+                canvas.transform.position = lmPosition.transform.position + new Vector3(0.4f, 0.5f, 0);
         }
+
+
 
         TextMeshProUGUI englishTextComponent = canvas.transform.Find("English_Text").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI germanTextComponent = canvas.transform.Find("German_Text").GetComponent<TextMeshProUGUI>();
