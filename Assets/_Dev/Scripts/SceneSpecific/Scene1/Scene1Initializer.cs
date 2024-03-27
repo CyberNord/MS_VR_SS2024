@@ -1,19 +1,21 @@
 using _Dev.Scripts.db;
-using _Dev.Scripts.ObjectBehaviour;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Scene1Initializer : MonoBehaviour
 {
     private LearnObjectManager _lm;
 
-    public GameObject lmPos;
-    public GameObject lmPos2;
-    public GameObject lmPos3;
+    //public GameObject lmPos;
+    //public GameObject lmPos2;
+    //public GameObject lmPos3;
+
+    public GameObject[] loPositions;
 
     public GameObject canvasPrefab;
 
@@ -31,46 +33,35 @@ public class Scene1Initializer : MonoBehaviour
             Debug.Log(lo.ToString() + ", Asset: " + (lo.Asset != null ? lo.Asset.name : "NULL"));
         }
 
-        //Objects are placed by their english name
-        LearnObject cubeLearnObject = allLearnObjects.Find(lo => string.Equals(lo.DescEnglish, "Cube", StringComparison.OrdinalIgnoreCase));
-        if (cubeLearnObject != null && cubeLearnObject.Asset != null)
-        {
-            InstantiateObjectWithCanvas(cubeLearnObject, lmPos, false, 0); //front side of the table
-        }
+        string[] objectDescriptions = { "Cube", "Sphere", "Capsule", "Cube", "Sphere", "Capsule", "Cube", "Sphere", "Capsule", "Cube" };
+        float[] rotationAngles = { 270f, 270f, 270f, 0f, 0f, 0f, 90f, 90f, 90f, 90f };
 
-        LearnObject sphereLearnObject = allLearnObjects.Find(lo => string.Equals(lo.DescEnglish, "Sphere", StringComparison.OrdinalIgnoreCase));
-        if (sphereLearnObject != null && sphereLearnObject.Asset != null)
+        for (int i = 0; i < objectDescriptions.Length; i++)
         {
-            InstantiateObjectWithCanvas(sphereLearnObject, lmPos2, true, 90); //right side of the table
-        }
-
-        LearnObject capsuleLearnObject = allLearnObjects.Find(lo => string.Equals(lo.DescEnglish, "Capsule", StringComparison.OrdinalIgnoreCase));
-        if (capsuleLearnObject != null && capsuleLearnObject.Asset != null)
-        {
-            InstantiateObjectWithCanvas(capsuleLearnObject, lmPos3, true, 270); //left side of the table
+            LearnObject learnObject = allLearnObjects.Find(lo => string.Equals(lo.DescEnglish, objectDescriptions[i], StringComparison.OrdinalIgnoreCase));
+            if (learnObject != null && learnObject.Asset != null)
+            {
+                InstantiateObjectWithCanvas(learnObject, loPositions[i], rotationAngles[i]);
+            }
         }
     }
 
-    void InstantiateObjectWithCanvas(LearnObject lo, GameObject lmPosition, bool rotateObject, float rotationAngle)
+    void InstantiateObjectWithCanvas(LearnObject lo, GameObject lmPosition, float rotationAngle)
     {
         GameObject obj = Instantiate(lo.Asset, lmPosition.transform.position, Quaternion.identity);
-
-        obj.AddComponent<DestroyObject>();
 
         // Adjust position and instantiate the canvas
         Vector3 canvasPosition = lmPosition.transform.position + new Vector3(0, 0.5f, 0.5f);
         GameObject canvas = Instantiate(canvasPrefab, canvasPosition, Quaternion.identity);
+        
+        obj.transform.Rotate(Vector3.up, rotationAngle);
+        canvas.transform.Rotate(Vector3.up, rotationAngle);
 
-        if (rotateObject)
-        {
-            obj.transform.Rotate(Vector3.up, rotationAngle);
-            canvas.transform.Rotate(Vector3.up, rotationAngle);
+        if (rotationAngle == 270)
+            canvas.transform.position = lmPosition.transform.position + new Vector3(-0.4f, 0.5f, 0);
+        else if (rotationAngle == 90)
+            canvas.transform.position = lmPosition.transform.position + new Vector3(0.4f, 0.5f, 0);
 
-            if (rotationAngle == 270)
-                canvas.transform.position = lmPosition.transform.position + new Vector3(-0.4f, 0.5f, 0);
-            else if (rotationAngle == 90)
-                canvas.transform.position = lmPosition.transform.position + new Vector3(0.4f, 0.5f, 0);
-        }
 
 
 
@@ -87,11 +78,17 @@ public class Scene1Initializer : MonoBehaviour
             germanTextComponent.text = lo.DescGerman;
         }
 
-        Button audioButton = canvas.GetComponentInChildren<Button>();
-        if (audioButton != null)
+        EventTrigger trigger = canvas.GetComponent<EventTrigger>();
+        if (trigger == null)
         {
-            audioButton.onClick.AddListener(() => PlayAudio(lo.AudioClipEnglish));
+            trigger = canvas.AddComponent<EventTrigger>();
         }
+
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerEnter;
+        entry.callback.AddListener((data) => { PlayAudio(lo.AudioClipEnglish); });
+
+        trigger.triggers.Add(entry);
     }
 
     void PlayAudio(AudioClip clip)
