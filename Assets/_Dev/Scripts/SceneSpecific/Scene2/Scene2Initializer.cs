@@ -1,4 +1,6 @@
 using _Dev.Scripts.db;
+using _Dev.Scripts.ObjectBehaviour;
+using Oculus.Interaction;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Scene1Initializer : MonoBehaviour
+public class Scene2Initializer : MonoBehaviour
 {
     private LearnObjectManager _lm;
 
@@ -45,11 +47,14 @@ public class Scene1Initializer : MonoBehaviour
     void InstantiateObjectWithCanvas(LearnObject lo, GameObject lmPosition, float rotationAngle)
     {
         GameObject obj = Instantiate(lo.Asset, lmPosition.transform.position, Quaternion.identity);
+        AddComponentsToLearnObject(obj);
+
+        //obj.AddComponent<DestroyObject>();
 
         // Adjust position and instantiate the canvas
         Vector3 canvasPosition = lmPosition.transform.position + new Vector3(0, 0.5f, 0.5f);
         GameObject canvas = Instantiate(canvasPrefab, canvasPosition, Quaternion.identity);
-        
+
         obj.transform.Rotate(Vector3.up, rotationAngle);
         canvas.transform.Rotate(Vector3.up, rotationAngle);
 
@@ -85,6 +90,47 @@ public class Scene1Initializer : MonoBehaviour
         entry.callback.AddListener((data) => { PlayAudio(lo.AudioClipEnglish); });
 
         trigger.triggers.Add(entry);
+    }
+
+    private void AddComponentsToLearnObject(GameObject obj)
+    {
+        obj.AddComponent<DestroyObject>();
+
+        Rigidbody rb = obj.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb = obj.AddComponent<Rigidbody>();
+        }
+
+        Grabbable grabbable = obj.GetComponent<Grabbable>();
+        if (grabbable == null)
+        {
+            obj.AddComponent<Grabbable>().enabled = true;
+        }
+        else if (!grabbable.enabled)
+        {
+            grabbable.enabled = true;
+        }
+
+        GrabInteractable grabInteractable = obj.GetComponent<GrabInteractable>();
+        if (grabInteractable == null)
+        {
+            obj.AddComponent<GrabInteractable>().enabled = true;
+        }
+        else if (!grabInteractable.enabled)
+        {
+            grabInteractable.enabled = true;
+        }
+
+        PhysicsGrabbable physicsGrabbable = obj.GetComponent<PhysicsGrabbable>();
+        if (physicsGrabbable == null)
+        {
+            obj.AddComponent<PhysicsGrabbable>().enabled = true;
+        }
+        else if (!physicsGrabbable.enabled)
+        {
+            physicsGrabbable.enabled = true;
+        }
     }
 
     void PlayAudio(AudioClip clip)
