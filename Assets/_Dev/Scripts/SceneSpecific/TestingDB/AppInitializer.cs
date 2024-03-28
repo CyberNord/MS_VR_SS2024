@@ -14,22 +14,12 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
         [Header("Spawn-points for LearnObjects")]
         [SerializeField] private List<GameObject> positions;
         
-        public GameObject lmPos3;
-        
         
         // Start is called before the first frame update
         private void Start()
         {
-
             _lm = new LearnObjectManager(); 
             new LearnObjectInitializer(_lm).InitializeDefaultLearnObjects();
-            
-            // Instantiate from "Resource" folder "GetLearnObjectGroups" method 
-            Instantiate(
-                NormalizeAsset(_lm.GetLearnObjectGroups(1)[0][0].Asset), // in a List of lists  (1)[1][0]  (number of Groups)[Group no-1][GameObject]
-                lmPos3.transform.position, 
-                Quaternion.identity
-                );
 
             // Instantiate from "Resource" folder "GetAllLearnObjects" method 
             _allLearnObjects = _lm.GetAllLearnObjects();
