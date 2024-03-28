@@ -31,14 +31,16 @@ namespace _Dev.Scripts.db
                 AddLearnObject(learnObject);
             }
         }
-        
-        
+
         public List<LearnObject> GetAllLearnObjects()
         {
             return _learnObjects.OrderBy(lo => lo.Id).ToList();
-            
         }
         
+        public List<string> GetAllLearnObjectsEngDesc()
+        {
+            return _learnObjects.Select(learnObject => learnObject.DescEnglish).ToList();
+        }
         
         // flexible grouping
         public List<LearnObject>[] GetLearnObjectGroups(int groupSize)

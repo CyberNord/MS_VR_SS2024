@@ -8,27 +8,17 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
     public class AppInitializer : MonoBehaviour
     {
         private LearnObjectManager _lm;
+        private List<LearnObject> _allLearnObjects;
+        private readonly Dictionary<string, GameObject> _toInstantiate = new();
         
-        public GameObject lmPos;
-        public GameObject lmPos2;
+        [Header("Spawn-points for LearnObjects")]
+        [SerializeField] private List<GameObject> positions;
+        
         public GameObject lmPos3;
-
-        private GameObject NormalizeAsset(float maxSizeThreshold, GameObject instance)
-        {
-            Vector3 size = instance.GetComponent<Renderer>().bounds.size; // Get the actual size of the instantiated object
-            float maxDimension = Mathf.Max(size.x, size.y, size.z); // Determine the largest dimension
-
-            if(maxDimension > maxSizeThreshold)
-            {
-                float scaleFactor = maxSizeThreshold / maxDimension; // Calculate the scale factor
-                instance.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor); // Apply uniform scaling
-            }
-            
-            return instance;
-        }
-
+        
+        
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
 
             _lm = new LearnObjectManager(); 
@@ -36,42 +26,70 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
             
             // Instantiate from "Resource" folder "GetLearnObjectGroups" method 
             Instantiate(
-                NormalizeAsset(1.0f,
-                    // in a List of lists  (1)[1][0]  (number of Groups)[Group no-1][GameObject]
-                    _lm.GetLearnObjectGroups(1)[0][0].Asset), 
+                NormalizeAsset(_lm.GetLearnObjectGroups(1)[0][0].Asset), // in a List of lists  (1)[1][0]  (number of Groups)[Group no-1][GameObject]
                 lmPos3.transform.position, 
                 Quaternion.identity
                 );
 
             // Instantiate from "Resource" folder "GetAllLearnObjects" method 
-            List<LearnObject> allLearnObjects = _lm.GetAllLearnObjects();
-            Debug.Log($"LearnObject count: {allLearnObjects.Count}");
-            foreach (var lo in allLearnObjects)
-            {
-                Debug.Log(lo.ToString() + ", Asset: " + (lo.Asset != null ? lo.Asset.name : "NULL"));
-            }
+            _allLearnObjects = _lm.GetAllLearnObjects();
+            PopulateIdentifiers(_lm.GetAllLearnObjectsEngDesc());
 
-            //Hard Coded at the moment - will be replaced with a more dynamic approach 
-            string[] toInstantiate = { "purse", "bottle"};
-            GameObject[] go = { lmPos, lmPos2 };
-            int i = 0;
-
-            foreach (var curr in toInstantiate)
+            foreach (var item in _toInstantiate)
             {
-                LearnObject currLearnObject = allLearnObjects.Find(
-                        lo => string.Equals(lo.DescEnglish, curr, StringComparison.OrdinalIgnoreCase)
+                var currLearnObject = _allLearnObjects.Find(
+                    lo => string.Equals(
+                        lo.DescEnglish, 
+                        item.Key, 
+                        StringComparison.OrdinalIgnoreCase
+                        )
                     );
-                if(currLearnObject != null && currLearnObject.Asset != null) 
+                    
+                if (item.Value != null && currLearnObject.Asset != null)
                 {
-                    Instantiate(
-                        NormalizeAsset(1.0f, currLearnObject.Asset),      // Object
-                        go[i].transform.position,           // Position (placeholder object in scene)
-                        Quaternion.identity                 // Rotation
-                    );               
+                    InstantiateLearnObject(item.Key, item.Value);
                 }
-                i++; 
+            }
+        }
+        
+        private void PopulateIdentifiers(List<string> identifiers)
+        {
+            int minCount = Mathf.Min(identifiers.Count, positions.Count);
+            for (var i = 0; i < minCount; i++)
+            {
+                if (!_toInstantiate.ContainsKey(identifiers[i]))
+                {
+                    _toInstantiate.Add(identifiers[i], positions[i]);
+                }
+            }
+        }
+        private static GameObject NormalizeAsset(GameObject instance)
+        {
+            Vector3 size = instance.GetComponent<Renderer>().bounds.size; 
+            float maxDimension = Mathf.Max(size.x, size.y, size.z); 
+
+            if(maxDimension > Constants.MaxSizeThreshold)
+            {
+                float scaleFactor = Constants.MaxSizeThreshold / maxDimension; 
+                instance.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor); 
             }
             
+            return instance;
+        }
+        private void InstantiateLearnObject(string descEnglish, GameObject instance)
+        {
+            var currLearnObject = _allLearnObjects.Find(
+                lo => string.Equals(lo.DescEnglish, descEnglish, StringComparison.OrdinalIgnoreCase)
+            );
+            
+            if(currLearnObject != null && currLearnObject.Asset != null) 
+            {
+                Instantiate(
+                    NormalizeAsset(currLearnObject.Asset),      // Object
+                    instance.transform.position,           // Position (placeholder object in scene)
+                    Quaternion.identity                 // Rotation
+                );               
+            }
         }
     }
 }

@@ -10,5 +10,8 @@ namespace _Dev.Scripts
         public const string VimmiAudioFile = "vim";
         
         public const string VocabelTextFile = "loc";
+        
+        // Initializer Constants
+        public const float MaxSizeThreshold = 1.0f;
     }
 }
