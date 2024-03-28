@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using _Dev.Scripts.db;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace _Dev.Scripts
+namespace _Dev.Scripts.SceneSpecific.TestingDB
 {
     public class AppInitializer : MonoBehaviour
     {
@@ -14,6 +13,19 @@ namespace _Dev.Scripts
         public GameObject lmPos2;
         public GameObject lmPos3;
 
+        private GameObject NormalizeAsset(float maxSizeThreshold, GameObject instance)
+        {
+            Vector3 size = instance.GetComponent<Renderer>().bounds.size; // Get the actual size of the instantiated object
+            float maxDimension = Mathf.Max(size.x, size.y, size.z); // Determine the largest dimension
+
+            if(maxDimension > maxSizeThreshold)
+            {
+                float scaleFactor = maxSizeThreshold / maxDimension; // Calculate the scale factor
+                instance.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor); // Apply uniform scaling
+            }
+            
+            return instance;
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -23,12 +35,14 @@ namespace _Dev.Scripts
             new LearnObjectInitializer(_lm).InitializeDefaultLearnObjects();
             
             // Instantiate from "Resource" folder "GetLearnObjectGroups" method 
-            Instantiate(_lm.GetLearnObjectGroups(1)[1][0].Asset,     // in a List of lists  (1)[1][0]  (number of Groups)[Group no-1][GameObject]
-                lmPos3.transform.position,                                  
-                Quaternion.identity                                         
-            );
+            Instantiate(
+                NormalizeAsset(1.0f,
+                    // in a List of lists  (1)[1][0]  (number of Groups)[Group no-1][GameObject]
+                    _lm.GetLearnObjectGroups(1)[0][0].Asset), 
+                lmPos3.transform.position, 
+                Quaternion.identity
+                );
 
-            
             // Instantiate from "Resource" folder "GetAllLearnObjects" method 
             List<LearnObject> allLearnObjects = _lm.GetAllLearnObjects();
             Debug.Log($"LearnObject count: {allLearnObjects.Count}");
@@ -36,29 +50,28 @@ namespace _Dev.Scripts
             {
                 Debug.Log(lo.ToString() + ", Asset: " + (lo.Asset != null ? lo.Asset.name : "NULL"));
             }
-            
-            
-            //Objects are placed by their english name
-            LearnObject cubeLearnObject = allLearnObjects.Find(lo => string.Equals(lo.DescEnglish, "Cube", StringComparison.OrdinalIgnoreCase));
-            if(cubeLearnObject != null && cubeLearnObject.Asset != null) 
-            {
-                Instantiate(cubeLearnObject.Asset,      // Object
-                    lmPos.transform.position,           // Position (placeholder object in scene)
-                    Quaternion.identity);               // Rotation
-            }
-            
-            LearnObject sphereLearnObject = allLearnObjects.Find(lo => string.Equals(lo.DescEnglish, "Sphere", StringComparison.OrdinalIgnoreCase));
-            if(sphereLearnObject != null && sphereLearnObject.Asset != null)
-            {
-                Instantiate(sphereLearnObject.Asset, 
-                    lmPos2.transform.position, 
-                    Quaternion.identity);
-            }
-            
-            
-            
-            
 
+            //Hard Coded at the moment - will be replaced with a more dynamic approach 
+            string[] toInstantiate = { "purse", "bottle"};
+            GameObject[] go = { lmPos, lmPos2 };
+            int i = 0;
+
+            foreach (var curr in toInstantiate)
+            {
+                LearnObject currLearnObject = allLearnObjects.Find(
+                        lo => string.Equals(lo.DescEnglish, curr, StringComparison.OrdinalIgnoreCase)
+                    );
+                if(currLearnObject != null && currLearnObject.Asset != null) 
+                {
+                    Instantiate(
+                        NormalizeAsset(1.0f, currLearnObject.Asset),      // Object
+                        go[i].transform.position,           // Position (placeholder object in scene)
+                        Quaternion.identity                 // Rotation
+                    );               
+                }
+                i++; 
+            }
+            
         }
     }
 }
