@@ -4,12 +4,10 @@ using System.Linq;
 using _Dev.Scripts.db;
 using UnityEngine;
 
-namespace _Dev.Scripts.SceneSpecific.TestingDB
+
+namespace _Dev.Scripts.SceneSpecific.Scene1
 {
-    /// <summary>
-    /// The template class for each scene placing the LearnObjects on their place on the shelves
-    /// </summary>
-    public class AppInitializer : MonoBehaviour
+    public class Scene1Init : MonoBehaviour
     {
         private LearnObjectManager _lm;
         private List<LearnObject> _allLearnObjects;
@@ -18,8 +16,8 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
         
         [Header("Spawn-points for LearnObjects")]
         [SerializeField] private List<GameObject> loPositions;
-        
-        
+        [SerializeField] private GameObject canvasPrefab;
+
         // Start is called before the first frame update
         private void Start()
         {
@@ -31,19 +29,21 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
                 .ToDictionary(
                     lo => lo.DescEnglish, lo => lo,
                     StringComparer.OrdinalIgnoreCase
-                    );
-
+                );
 
             // Create Dictionary (Key = DescEnglish, Value = Position Object) ==> Positions to Spawn
             PopulateIdentifiers(_lm.GetAllLearnObjectsEngDesc());
             
             // Instantiate the LearnObjects to positions 
-            foreach (var identifier in _posToInstantiate)
+            int i = -1;
+            foreach (var posPair in _posToInstantiate)
             {
                 LearnObject currLearnObject;
-                if (_allLearnObjectsDict.TryGetValue(identifier.Key, out currLearnObject))
+                i++;
+                if (_allLearnObjectsDict.TryGetValue(posPair.Key, out currLearnObject))
                 {
-                    SceneHelper.InstantiateLearnObject(currLearnObject.Asset, identifier.Value);
+                    SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value);
+                    InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.rotationAngles[i]);
                 }
             }
         }
@@ -58,6 +58,16 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
                     _posToInstantiate.Add(identifiers[i], loPositions[i]);
                 }
             }
+        }
+
+        private void InstantiateObjectWithCanvas(LearnObject lo, GameObject lmPosition, float rotationAngle)
+        {
+            Vector3 canvasPosition = SceneHelper.CalculateCanvasPosition(lmPosition, rotationAngle);
+            GameObject canvas = Instantiate(canvasPrefab, canvasPosition, Quaternion.identity);
+            canvas.transform.Rotate(Vector3.up, rotationAngle);
+
+            SceneHelper.SetUpTextComponents(canvas, lo);
+            SceneHelper.SetUpEventTrigger(canvas, lo);
         }
     }
 }
