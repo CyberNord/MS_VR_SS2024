@@ -3185,7 +3185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925de6d26b0b1ee4c8b7c055406b1874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positions:
+  loPositions:
   - {fileID: 822814662}
   - {fileID: 309508525}
   - {fileID: 1880074434}

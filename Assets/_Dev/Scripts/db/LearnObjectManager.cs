@@ -48,7 +48,7 @@ namespace _Dev.Scripts.db
         }
 
         // flexible grouping
-        public List<LearnObject>[] GetLearnObjectGroups(int groupSize)
+        public List<LearnObject> GetLearnObjectGroup(int groupSize, int groupNumber)
         {
             if (_learnObjects.Count < groupSize)
             {
@@ -64,11 +64,11 @@ namespace _Dev.Scripts.db
                 groups[i] = sortedLearnObjects.Skip(i * groupSize).Take(groupSize).ToList();
             }
 
-            return groups;
+            return groups[groupNumber];
         }
 
         // ensures consistent fixed group
-        public List<LearnObject>[] GetLearnObjectGroupsFixed()
+        public List<LearnObject> GetLearnObjectGroupsFixed(int groupNumber)
         {
             if (_learnObjects.Count < 30)
             {
@@ -85,7 +85,7 @@ namespace _Dev.Scripts.db
                 groups[i] = randomizedLearnObjects.Skip(i * 10).Take(10).ToList();
             }
 
-            return groups;
+            return groups[groupNumber];
         }
     }
 }

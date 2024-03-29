@@ -17,7 +17,7 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
         private Dictionary<string, LearnObject> _allLearnObjectsDict;
         
         [Header("Spawn-points for LearnObjects")]
-        [SerializeField] private List<GameObject> positions;
+        [SerializeField] private List<GameObject> loPositions;
         
         
         // Start is called before the first frame update
@@ -30,30 +30,32 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
             _allLearnObjectsDict = _lm.GetAllLearnObjects()
                 .ToDictionary(
                     lo => lo.DescEnglish, lo => lo,
-                    StringComparer.OrdinalIgnoreCase);
+                    StringComparer.OrdinalIgnoreCase
+                    );
 
 
             // Create Dictionary (Key = DescEnglish, Value = Position Object) ==> Positions to Spawn
             PopulateIdentifiers(_lm.GetAllLearnObjectsEngDesc());
             
             // Instantiate the LearnObjects to positions 
-            foreach (var identifier in _posToInstantiate.Keys)
+            foreach (var identifier in _posToInstantiate)
             {
-                if (_allLearnObjectsDict.TryGetValue(identifier, out var currLearnObject))
+                LearnObject currLearnObject;
+                if (_allLearnObjectsDict.TryGetValue(identifier.Key, out currLearnObject))
                 {
-                    SceneHelper.InstantiateLearnObject(currLearnObject.Asset, _posToInstantiate[identifier]);
+                    SceneHelper.InstantiateLearnObject(currLearnObject.Asset, identifier.Value);
                 }
             }
         }
         
         private void PopulateIdentifiers(List<string> identifiers)
         {
-            int minCount = Mathf.Min(identifiers.Count, positions.Count);
+            int minCount = Mathf.Min(identifiers.Count, loPositions.Count);
             for (var i = 0; i < minCount; i++)
             {
                 if (!_posToInstantiate.ContainsKey(identifiers[i]))
                 {
-                    _posToInstantiate.Add(identifiers[i], positions[i]);
+                    _posToInstantiate.Add(identifiers[i], loPositions[i]);
                 }
             }
         }
