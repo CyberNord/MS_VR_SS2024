@@ -36,12 +36,17 @@ namespace _Dev.Scripts.db
         {
             return _learnObjects.OrderBy(lo => lo.Id).ToList();
         }
-        
+
         public List<string> GetAllLearnObjectsEngDesc()
         {
             return _learnObjects.Select(learnObject => learnObject.DescEnglish).ToList();
         }
         
+        public List<string> GetAllLearnObjectsGerDesc()
+        {
+            return _learnObjects.Select(learnObject => learnObject.DescGerman).ToList();
+        }
+
         // flexible grouping
         public List<LearnObject>[] GetLearnObjectGroups(int groupSize)
         {

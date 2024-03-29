@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Dev.Scripts.db;
 using UnityEngine;
 
 namespace _Dev.Scripts.SceneSpecific.TestingDB
 {
+    /// <summary>
+    /// The template class for each scene placing the LearnObjects on their place on the shelves
+    /// </summary>
     public class AppInitializer : MonoBehaviour
     {
         private LearnObjectManager _lm;
         private List<LearnObject> _allLearnObjects;
-        private readonly Dictionary<string, GameObject> _toInstantiate = new();
+        private readonly Dictionary<string, GameObject> _posToInstantiate = new();
+        private Dictionary<string, LearnObject> _allLearnObjectsDict;
         
         [Header("Spawn-points for LearnObjects")]
         [SerializeField] private List<GameObject> positions;
@@ -21,23 +26,22 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
             _lm = new LearnObjectManager(); 
             new LearnObjectInitializer(_lm).InitializeDefaultLearnObjects();
 
-            // Instantiate from "Resource" folder "GetAllLearnObjects" method 
-            _allLearnObjects = _lm.GetAllLearnObjects();
-            PopulateIdentifiers(_lm.GetAllLearnObjectsEngDesc());
+            // Create Dictionary (Key = DescEnglish, Value = LearnObject) ==> Objects to Spawn
+            _allLearnObjectsDict = _lm.GetAllLearnObjects()
+                .ToDictionary(
+                    lo => lo.DescEnglish, lo => lo,
+                    StringComparer.OrdinalIgnoreCase);
 
-            foreach (var item in _toInstantiate)
+
+            // Create Dictionary (Key = DescEnglish, Value = Position Object) ==> Positions to Spawn
+            PopulateIdentifiers(_lm.GetAllLearnObjectsEngDesc());
+            
+            // Instantiate the LearnObjects to positions 
+            foreach (var identifier in _posToInstantiate.Keys)
             {
-                var currLearnObject = _allLearnObjects.Find(
-                    lo => string.Equals(
-                        lo.DescEnglish, 
-                        item.Key, 
-                        StringComparison.OrdinalIgnoreCase
-                        )
-                    );
-                    
-                if (item.Value != null && currLearnObject.Asset != null)
+                if (_allLearnObjectsDict.TryGetValue(identifier, out var currLearnObject))
                 {
-                    InstantiateLearnObject(item.Key, item.Value);
+                    SceneHelper.InstantiateLearnObject(currLearnObject.Asset, _posToInstantiate[identifier]);
                 }
             }
         }
@@ -47,38 +51,10 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
             int minCount = Mathf.Min(identifiers.Count, positions.Count);
             for (var i = 0; i < minCount; i++)
             {
-                if (!_toInstantiate.ContainsKey(identifiers[i]))
+                if (!_posToInstantiate.ContainsKey(identifiers[i]))
                 {
-                    _toInstantiate.Add(identifiers[i], positions[i]);
+                    _posToInstantiate.Add(identifiers[i], positions[i]);
                 }
-            }
-        }
-        private static GameObject NormalizeAsset(GameObject instance)
-        {
-            Vector3 size = instance.GetComponent<Renderer>().bounds.size; 
-            float maxDimension = Mathf.Max(size.x, size.y, size.z); 
-
-            if(maxDimension > Constants.MaxSizeThreshold)
-            {
-                float scaleFactor = Constants.MaxSizeThreshold / maxDimension; 
-                instance.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor); 
-            }
-            
-            return instance;
-        }
-        private void InstantiateLearnObject(string descEnglish, GameObject instance)
-        {
-            var currLearnObject = _allLearnObjects.Find(
-                lo => string.Equals(lo.DescEnglish, descEnglish, StringComparison.OrdinalIgnoreCase)
-            );
-            
-            if(currLearnObject != null && currLearnObject.Asset != null) 
-            {
-                Instantiate(
-                    NormalizeAsset(currLearnObject.Asset),      // Object
-                    instance.transform.position,           // Position (placeholder object in scene)
-                    Quaternion.identity                 // Rotation
-                );               
             }
         }
     }
