@@ -2119,7 +2119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f9b6715f1eaf94a9439f3e977c0a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeDuration: 10
 --- !u!1 &310238959
 GameObject:
   m_ObjectHideFlags: 0
@@ -5289,7 +5288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f9b6715f1eaf94a9439f3e977c0a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeDuration: 10
 --- !u!1 &1736974514
 GameObject:
   m_ObjectHideFlags: 0
@@ -6202,7 +6200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f9b6715f1eaf94a9439f3e977c0a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeDuration: 5
 --- !u!1 &1934607075
 GameObject:
   m_ObjectHideFlags: 0
