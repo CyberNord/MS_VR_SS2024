@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace _Dev.Scripts.db
 {
+    /// <summary>
+    /// This class initializes the LearnObjects from the Resource folder
+    /// and saves them in a List of LearnObjects
+    /// </summary>
     public class LearnObjectInitializer
     {
         private readonly LearnObjectManager _learnObjectManager;

@@ -1,64 +1,61 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Dev.Scripts.db;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace _Dev.Scripts
+namespace _Dev.Scripts.SceneSpecific.TestingDB
 {
+    /// <summary>
+    /// The template class for each scene placing the LearnObjects on their place on the shelves
+    /// </summary>
     public class AppInitializer : MonoBehaviour
     {
         private LearnObjectManager _lm;
+        private List<LearnObject> _allLearnObjects;
+        private readonly Dictionary<string, GameObject> _posToInstantiate = new();
+        private Dictionary<string, LearnObject> _allLearnObjectsDict;
         
-        public GameObject lmPos;
-        public GameObject lmPos2;
-        public GameObject lmPos3;
-
-
+        [Header("Spawn-points for LearnObjects")]
+        [SerializeField] private List<GameObject> positions;
+        
+        
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-
             _lm = new LearnObjectManager(); 
             new LearnObjectInitializer(_lm).InitializeDefaultLearnObjects();
-            
-            // Instantiate from "Resource" folder "GetLearnObjectGroups" method 
-            Instantiate(_lm.GetLearnObjectGroups(1)[1][0].Asset,     // in a List of lists  (1)[1][0]  (number of Groups)[Group no-1][GameObject]
-                lmPos3.transform.position,                                  
-                Quaternion.identity                                         
-            );
 
-            
-            // Instantiate from "Resource" folder "GetAllLearnObjects" method 
-            List<LearnObject> allLearnObjects = _lm.GetAllLearnObjects();
-            Debug.Log($"LearnObject count: {allLearnObjects.Count}");
-            foreach (var lo in allLearnObjects)
-            {
-                Debug.Log(lo.ToString() + ", Asset: " + (lo.Asset != null ? lo.Asset.name : "NULL"));
-            }
-            
-            
-            //Objects are placed by their english name
-            LearnObject cubeLearnObject = allLearnObjects.Find(lo => string.Equals(lo.DescEnglish, "Cube", StringComparison.OrdinalIgnoreCase));
-            if(cubeLearnObject != null && cubeLearnObject.Asset != null) 
-            {
-                Instantiate(cubeLearnObject.Asset,      // Object
-                    lmPos.transform.position,           // Position (placeholder object in scene)
-                    Quaternion.identity);               // Rotation
-            }
-            
-            LearnObject sphereLearnObject = allLearnObjects.Find(lo => string.Equals(lo.DescEnglish, "Sphere", StringComparison.OrdinalIgnoreCase));
-            if(sphereLearnObject != null && sphereLearnObject.Asset != null)
-            {
-                Instantiate(sphereLearnObject.Asset, 
-                    lmPos2.transform.position, 
-                    Quaternion.identity);
-            }
-            
-            
-            
-            
+            // Create Dictionary (Key = DescEnglish, Value = LearnObject) ==> Objects to Spawn
+            _allLearnObjectsDict = _lm.GetAllLearnObjects()
+                .ToDictionary(
+                    lo => lo.DescEnglish, lo => lo,
+                    StringComparer.OrdinalIgnoreCase);
 
+
+            // Create Dictionary (Key = DescEnglish, Value = Position Object) ==> Positions to Spawn
+            PopulateIdentifiers(_lm.GetAllLearnObjectsEngDesc());
+            
+            // Instantiate the LearnObjects to positions 
+            foreach (var identifier in _posToInstantiate.Keys)
+            {
+                if (_allLearnObjectsDict.TryGetValue(identifier, out var currLearnObject))
+                {
+                    SceneHelper.InstantiateLearnObject(currLearnObject.Asset, _posToInstantiate[identifier]);
+                }
+            }
+        }
+        
+        private void PopulateIdentifiers(List<string> identifiers)
+        {
+            int minCount = Mathf.Min(identifiers.Count, positions.Count);
+            for (var i = 0; i < minCount; i++)
+            {
+                if (!_posToInstantiate.ContainsKey(identifiers[i]))
+                {
+                    _posToInstantiate.Add(identifiers[i], positions[i]);
+                }
+            }
         }
     }
 }
