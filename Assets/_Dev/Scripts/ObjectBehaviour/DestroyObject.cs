@@ -1,44 +1,48 @@
 using UnityEngine;
 
-public class DestoryObject : MonoBehaviour
+
+namespace _Dev.Scripts.ObjectBehaviour
 {
-    public float fadeDuration = 10f;
-    private float elapsedTime = 0f;
-    private Renderer objectRenderer;
-    private Color originalColor;
-    private bool startFade = false;
-
-    void Start()
+    public class DestroyObject : MonoBehaviour
     {
-        objectRenderer = GetComponent<Renderer>();
+        private float fadeDuration = 10f;
+        private float elapsedTime = 0f;
+        private Renderer objectRenderer;
+        private Color originalColor;
+        private bool startFade = false;
 
-        originalColor = objectRenderer.material.color;
-    }
-
-    void Update()
-    {
-        if (startFade)
+        void Start()
         {
-            elapsedTime += Time.deltaTime;
+            objectRenderer = GetComponent<Renderer>();
 
-            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            originalColor = objectRenderer.material.color;
+        }
 
-            Color fadedColor = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
-
-            objectRenderer.material.color = fadedColor;
-
-            if (elapsedTime >= fadeDuration)
+        void Update()
+        {
+            if (startFade)
             {
-                Destroy(gameObject);
+                elapsedTime += Time.deltaTime;
+
+                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+
+                Color fadedColor = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+
+                objectRenderer.material.color = fadedColor;
+
+                if (elapsedTime >= fadeDuration)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
-    }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Trigger"))
+        void OnCollisionEnter(Collision collision)
         {
-            startFade = true;
+            if (collision.gameObject.CompareTag("Trigger"))
+            {
+                startFade = true;
+            }
         }
     }
 }
