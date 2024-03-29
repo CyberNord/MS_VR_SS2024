@@ -47,9 +47,10 @@ public class Scene2Initializer : MonoBehaviour
     void InstantiateObjectWithCanvas(LearnObject lo, GameObject lmPosition, float rotationAngle)
     {
         GameObject obj = Instantiate(lo.Asset, lmPosition.transform.position, Quaternion.identity);
-        AddComponentsToLearnObject(obj);
+        ConvertMaterialToTransparent(obj);
 
-        //obj.AddComponent<DestroyObject>();
+        obj.AddComponent<DestroyObject>();
+        //AddComponentsToLearnObject(obj);
 
         // Adjust position and instantiate the canvas
         Vector3 canvasPosition = lmPosition.transform.position + new Vector3(0, 0.5f, 0.5f);
@@ -62,8 +63,6 @@ public class Scene2Initializer : MonoBehaviour
             canvas.transform.position = lmPosition.transform.position + new Vector3(-0.4f, 0.5f, 0);
         else if (rotationAngle == 90)
             canvas.transform.position = lmPosition.transform.position + new Vector3(0.4f, 0.5f, 0);
-
-
 
 
         TextMeshProUGUI englishTextComponent = canvas.transform.Find("English_Text").GetComponent<TextMeshProUGUI>();
@@ -92,46 +91,57 @@ public class Scene2Initializer : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 
-    private void AddComponentsToLearnObject(GameObject obj)
+    private void ConvertMaterialToTransparent(GameObject obj)
     {
-        obj.AddComponent<DestroyObject>();
+        Renderer renderer = obj.GetComponent<Renderer>();
 
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
-        if (rb != null)
+        // Change material rendering mode to Transparent
+        if (renderer != null && renderer.material != null)
         {
-            rb = obj.AddComponent<Rigidbody>();
-        }
-
-        Grabbable grabbable = obj.GetComponent<Grabbable>();
-        if (grabbable == null)
-        {
-            obj.AddComponent<Grabbable>().enabled = true;
-        }
-        else if (!grabbable.enabled)
-        {
-            grabbable.enabled = true;
-        }
-
-        GrabInteractable grabInteractable = obj.GetComponent<GrabInteractable>();
-        if (grabInteractable == null)
-        {
-            obj.AddComponent<GrabInteractable>().enabled = true;
-        }
-        else if (!grabInteractable.enabled)
-        {
-            grabInteractable.enabled = true;
-        }
-
-        PhysicsGrabbable physicsGrabbable = obj.GetComponent<PhysicsGrabbable>();
-        if (physicsGrabbable == null)
-        {
-            obj.AddComponent<PhysicsGrabbable>().enabled = true;
-        }
-        else if (!physicsGrabbable.enabled)
-        {
-            physicsGrabbable.enabled = true;
+            renderer.material.SetFloat("_Surface", 1); // 1 is for Transparent mode
         }
     }
+
+    //private void AddComponentsToLearnObject(GameObject obj)
+    //{
+    //    obj.AddComponent<DestroyObject>();
+
+    //    Rigidbody rb = obj.GetComponent<Rigidbody>();
+    //    if (rb == null)
+    //    {
+    //        rb = obj.AddComponent<Rigidbody>();
+    //    }
+
+    //    Grabbable grabbable = obj.GetComponent<Grabbable>();
+    //    if (grabbable == null)
+    //    {
+    //        obj.AddComponent<Grabbable>().enabled = true;
+    //    }
+    //    else if (!grabbable.enabled)
+    //    {
+    //        grabbable.enabled = true;
+    //    }
+
+    //    GrabInteractable grabInteractable = obj.GetComponent<GrabInteractable>();
+    //    if (grabInteractable == null)
+    //    {
+    //        obj.AddComponent<GrabInteractable>().enabled = true;
+    //    }
+    //    else if (!grabInteractable.enabled)
+    //    {
+    //        grabInteractable.enabled = true;
+    //    }
+
+    //    PhysicsGrabbable physicsGrabbable = obj.GetComponent<PhysicsGrabbable>();
+    //    if (physicsGrabbable == null)
+    //    {
+    //        obj.AddComponent<PhysicsGrabbable>().enabled = true;
+    //    }
+    //    else if (!physicsGrabbable.enabled)
+    //    {
+    //        physicsGrabbable.enabled = true;
+    //    }
+    //}
 
     void PlayAudio(AudioClip clip)
     {
