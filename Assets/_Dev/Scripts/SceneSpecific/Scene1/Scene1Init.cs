@@ -4,7 +4,6 @@ using System.Linq;
 using _Dev.Scripts.db;
 using UnityEngine;
 
-
 namespace _Dev.Scripts.SceneSpecific.Scene1
 {
     public class Scene1Init : MonoBehaviour
@@ -32,8 +31,12 @@ namespace _Dev.Scripts.SceneSpecific.Scene1
                 );
 
             // Create Dictionary (Key = DescEnglish, Value = Position Object) ==> Positions to Spawn
-            PopulateIdentifiers(_lm.GetAllLearnObjectsEngDesc());
-            
+            PopulateIdentifiers(
+                _lm.GetLearnObjectGroupsFixed(Constants.FixedRandomGroup1)              // Set the fixed random group
+                .Select(x => x.DescEnglish) 
+                .ToList()
+                );
+
             // Instantiate the LearnObjects to positions 
             int i = -1;
             foreach (var posPair in _posToInstantiate)

@@ -82,17 +82,9 @@ namespace _Dev.Scripts.SceneSpecific.Scene1
 
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerEnter;
-            entry.callback.AddListener((data) => { PlayAudio(lo.AudioClipEnglish); });
+            entry.callback.AddListener((data) => { SceneHelper.PlayAudio(lo.AudioClipEnglish); });
 
             trigger.triggers.Add(entry);
-        }
-
-        void PlayAudio(AudioClip clip)
-        {
-            if (clip != null)
-            {
-                AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
-            }
         }
     }
 }

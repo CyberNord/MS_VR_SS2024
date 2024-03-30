@@ -91,12 +91,12 @@ namespace _Dev.Scripts.SceneSpecific.Scene2
 
         private void ConvertMaterialToTransparent(GameObject obj)
         {
-            Renderer renderer = obj.GetComponent<Renderer>();
+            Renderer component = obj.GetComponent<Renderer>();
 
             // Change material rendering mode to Transparent
-            if (renderer != null && renderer.material != null)
+            if (component != null && component.material != null)
             {
-                renderer.material.SetFloat("_Surface", 1); // 1 is for Transparent mode
+                component.material.SetFloat(Constants.MaterialSurface, 1); // 1 is for Transparent mode
             }
         }
 
