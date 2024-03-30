@@ -3316,6 +3316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 681182647}
   - component: {fileID: 681182648}
+  - component: {fileID: 681182649}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -3345,9 +3346,34 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681182645}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e7a80afd0087e746a55f3a9190f36c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loPositions:
+  - {fileID: 966206058}
+  - {fileID: 1001812483}
+  - {fileID: 801359301}
+  - {fileID: 279700303}
+  - {fileID: 1173079164}
+  - {fileID: 1783845042}
+  - {fileID: 321863578}
+  - {fileID: 1786639144}
+  - {fileID: 921374074}
+  - {fileID: 1149812732}
+  canvasPrefab: {fileID: 4291156826377111414, guid: 2e098d0842cc9b34ab8c1e7cbef72f54,
+    type: 3}
+--- !u!114 &681182649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681182645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6b1c8de01e446687d59267cccb42cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   loPositions:
