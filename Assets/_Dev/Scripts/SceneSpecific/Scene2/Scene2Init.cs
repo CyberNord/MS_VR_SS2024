@@ -13,15 +13,16 @@ namespace _Dev.Scripts.SceneSpecific.Scene2
         private List<LearnObject> _allLearnObjects;
         private readonly Dictionary<string, GameObject> _posToInstantiate = new();
         private Dictionary<string, LearnObject> _allLearnObjectsDict;
-        
-        [Header("Spawn-points for LearnObjects")]
-        [SerializeField] private List<GameObject> loPositions;
+
+        [Header("Spawn-points for LearnObjects")] [SerializeField]
+        private List<GameObject> loPositions;
+
         [SerializeField] private GameObject canvasPrefab;
 
         // Start is called before the first frame update
         private void Start()
         {
-            _lm = new LearnObjectManager(); 
+            _lm = new LearnObjectManager();
             new LearnObjectInitializer(_lm).InitializeDefaultLearnObjects();
 
             // Create Dictionary (Key = DescEnglish, Value = LearnObject) ==> Objects to Spawn
@@ -33,12 +34,12 @@ namespace _Dev.Scripts.SceneSpecific.Scene2
 
             // Create Dictionary (Key = DescEnglish, Value = Position Object) ==> Positions to Spawn
             PopulateIdentifiers(
-                _lm.GetLearnObjectGroupsFixed(Constants.FixedRandomGroup2)              // Set the fixed random group
-                .Select(x => x.DescEnglish) 
-                .ToList()
-                ); 
-            
-            
+                _lm.GetLearnObjectGroupsFixed(Constants.FixedRandomGroup2) // Set the fixed random group
+                    .Select(x => x.DescEnglish)
+                    .ToList()
+            );
+
+
             // Instantiate the LearnObjects to positions 
             int i = -1;
             foreach (var posPair in _posToInstantiate)
@@ -50,12 +51,12 @@ namespace _Dev.Scripts.SceneSpecific.Scene2
                     GameObject obj = SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value);
                     SceneHelper.ConvertMaterialToTransparent(obj);
                     obj.AddComponent<DestroyObject>();
-                    
+
                     InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.rotationAngles[i]);
                 }
             }
         }
-        
+
         private void PopulateIdentifiers(List<string> identifiers)
         {
             int minCount = Mathf.Min(identifiers.Count, loPositions.Count);
