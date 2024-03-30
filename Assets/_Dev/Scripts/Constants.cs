@@ -15,5 +15,12 @@ namespace _Dev.Scripts
         public const float MaxSizeThreshold = 1.0f;
         public const float RotationTolerance = 1.0f;
         public static readonly float[] rotationAngles = { 270f, 270f, 270f, 0f, 0f, 0f, 0f, 90f, 90f, 90f };
+
+        public const int FixedRandomGroup1 = 0; 
+        public const int FixedRandomGroup2 = 1; 
+        public const int FixedRandomGroup3 = 2; 
+        
+        //Material
+        public const string MaterialSurface = "_Surface";
     }
 }

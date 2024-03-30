@@ -90,5 +90,16 @@ namespace _Dev.Scripts.SceneSpecific
             entry.callback.AddListener(_ => PlayAudio(lo.AudioClipEnglish));
             trigger.triggers.Add(entry);
         }
+        
+        public static void ConvertMaterialToTransparent(GameObject obj)
+        {
+            Renderer renderer = obj.GetComponent<Renderer>();
+
+            // Change material rendering mode to Transparent
+            if (renderer != null && renderer.material != null)
+            {
+                renderer.material.SetFloat("_Surface", 1); // 1 is for Transparent mode
+            }
+        }
     }
 }
