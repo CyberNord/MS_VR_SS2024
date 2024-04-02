@@ -52,7 +52,7 @@ namespace _Dev.Scripts.SceneSpecific.Scene2
                     SceneHelper.ConvertMaterialToTransparent(obj);
                     obj.AddComponent<DestroyObject>();
 
-                    InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.rotationAngles[i]);
+                    InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.RotationAngles[i]);
                 }
             }
         }

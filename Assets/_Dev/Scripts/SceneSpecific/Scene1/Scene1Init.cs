@@ -47,7 +47,7 @@ namespace _Dev.Scripts.SceneSpecific.Scene1
                 if (_allLearnObjectsDict.TryGetValue(posPair.Key, out currLearnObject))
                 {
                     SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value);
-                    InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.rotationAngles[i]);
+                    InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.RotationAngles[i]);
                 }
             }
         }
