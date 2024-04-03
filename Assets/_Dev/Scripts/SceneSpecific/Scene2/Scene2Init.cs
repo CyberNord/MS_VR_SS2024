@@ -7,7 +7,7 @@ using _Dev.Scripts.ObjectBehaviour;
 
 namespace _Dev.Scripts.SceneSpecific.Scene2
 {
-    public class Scene1Init : MonoBehaviour
+    public class Scene2Init : MonoBehaviour
     {
         private LearnObjectManager _lm;
         private List<LearnObject> _allLearnObjects;
@@ -50,7 +50,7 @@ namespace _Dev.Scripts.SceneSpecific.Scene2
                 {
                     GameObject obj = SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value);
                     SceneHelper.ConvertMaterialToTransparent(obj);
-                    obj.AddComponent<DestroyObject>();
+                    SceneHelper.ActivateComponents(obj);
 
                     InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.RotationAngles[i]);
                 }

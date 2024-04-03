@@ -4,6 +4,8 @@ using UnityEngine;
 using Debug = System.Diagnostics.Debug;
 using TMPro;
 using UnityEngine.EventSystems;
+using _Dev.Scripts.ObjectBehaviour;
+using Oculus.Interaction;
 
 namespace _Dev.Scripts.SceneSpecific
 {
@@ -103,6 +105,14 @@ namespace _Dev.Scripts.SceneSpecific
             {
                 renderer.material.SetFloat("_Surface", 1); // 1 is for Transparent mode
             }
+        }
+
+        public static void ActivateComponents(GameObject learnObject)
+        {
+            learnObject.AddComponent<DestroyObject>();
+            learnObject.GetComponent<Grabbable>().enabled = true;
+            learnObject.GetComponent<GrabInteractable>().enabled = true;
+            learnObject.GetComponent<PhysicsGrabbable>().enabled = true;
         }
     }
 }
