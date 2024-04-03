@@ -15,19 +15,17 @@ namespace _Dev.Scripts.SceneSpecific
     public class SceneHelper : MonoBehaviour
     {
         
-        public static GameObject InstantiateLearnObject(GameObject learnObject, GameObject pos,Quaternion rotation = default )
+        public static GameObject InstantiateLearnObject(GameObject learnObject, GameObject pos, Quaternion rotation = default)
         {
             GameObject obj = null;
             if(learnObject != null && pos != null) 
             {
                 obj = Instantiate(
                     NormalizeAsset(learnObject),            // Object
-                    pos.transform.position,                       // Position (placeholder object in scene)
-                    rotation                                      // Rotation
+                    pos.transform.position,                 // Position (placeholder object in scene)
+                    rotation                           // Rotation
                 );               
             }
-
-            obj.transform.rotation = learnObject.transform.rotation;
 
             return obj;
         }
