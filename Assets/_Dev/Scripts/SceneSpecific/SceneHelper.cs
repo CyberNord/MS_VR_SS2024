@@ -24,6 +24,9 @@ namespace _Dev.Scripts.SceneSpecific
                     rotation                                      // Rotation
                 );               
             }
+
+            obj.transform.rotation = learnObject.transform.rotation;
+
             return obj;
         }
 
