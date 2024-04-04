@@ -48,7 +48,8 @@ namespace _Dev.Scripts.SceneSpecific.Scene2
                 i++;
                 if (_allLearnObjectsDict.TryGetValue(posPair.Key, out currLearnObject))
                 {
-                    GameObject obj = SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value, Quaternion.Euler(0, Constants.RotationAngles[i], 0));
+                    Quaternion rotation = currLearnObject.Asset.transform.rotation * Quaternion.Euler(0, Constants.RotationAngles[i], 0);
+                    GameObject obj = SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value, rotation);
                     SceneHelper.ConvertMaterialToTransparent(obj);
                     SceneHelper.ActivateComponents(obj);
 

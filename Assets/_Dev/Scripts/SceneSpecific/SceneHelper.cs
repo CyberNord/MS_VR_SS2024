@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using _Dev.Scripts.ObjectBehaviour;
 using Oculus.Interaction;
+using Oculus.Interaction.HandGrab;
 
 namespace _Dev.Scripts.SceneSpecific
 {
@@ -110,6 +111,7 @@ namespace _Dev.Scripts.SceneSpecific
             learnObject.AddComponent<DestroyObject>();
             learnObject.GetComponent<Grabbable>().enabled = true;
             learnObject.GetComponent<GrabInteractable>().enabled = true;
+            learnObject.GetComponent<HandGrabInteractable>().enabled = true;
             learnObject.GetComponent<PhysicsGrabbable>().enabled = true;
         }
     }

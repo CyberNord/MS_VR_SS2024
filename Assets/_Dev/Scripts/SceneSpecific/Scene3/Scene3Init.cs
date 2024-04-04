@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using _Dev.Scripts.db;
 using UnityEngine;
+using _Dev.Scripts.ObjectBehaviour;
 
-namespace _Dev.Scripts.SceneSpecific.Scene1
+namespace _Dev.Scripts.SceneSpecific.Scene2
 {
-    public class Scene1Init : MonoBehaviour
+    public class Scene3Init : MonoBehaviour
     {
         private LearnObjectManager _lm;
         private List<LearnObject> _allLearnObjects;
@@ -33,10 +34,11 @@ namespace _Dev.Scripts.SceneSpecific.Scene1
 
             // Create Dictionary (Key = DescEnglish, Value = Position Object) ==> Positions to Spawn
             PopulateIdentifiers(
-                _lm.GetLearnObjectGroupsFixed(Constants.FixedRandomGroup1) // Set the fixed random group
+                _lm.GetLearnObjectGroupsFixed(Constants.FixedRandomGroup2) // Set the fixed random group
                     .Select(x => x.DescEnglish)
                     .ToList()
             );
+
 
             // Instantiate the LearnObjects to positions 
             int i = -1;
@@ -47,7 +49,10 @@ namespace _Dev.Scripts.SceneSpecific.Scene1
                 if (_allLearnObjectsDict.TryGetValue(posPair.Key, out currLearnObject))
                 {
                     Quaternion rotation = currLearnObject.Asset.transform.rotation * Quaternion.Euler(0, Constants.RotationAngles[i], 0);
-                    SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value, rotation);
+                    GameObject obj = SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value, rotation);
+                    SceneHelper.ConvertMaterialToTransparent(obj);
+                    SceneHelper.ActivateComponents(obj);
+
                     InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.RotationAngles[i]);
                 }
             }
