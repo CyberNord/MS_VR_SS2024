@@ -34,7 +34,7 @@ namespace _Dev.Scripts.SceneSpecific.Scene2
 
             // Create Dictionary (Key = DescEnglish, Value = Position Object) ==> Positions to Spawn
             PopulateIdentifiers(
-                _lm.GetLearnObjectGroupsFixed(Constants.FixedRandomGroup2) // Set the fixed random group
+                _lm.GetLearnObjectGroupsFixed(Constants.FixedRandomGroup3) // Set the fixed random group
                     .Select(x => x.DescEnglish)
                     .ToList()
             );
