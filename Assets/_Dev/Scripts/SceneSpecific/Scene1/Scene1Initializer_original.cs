@@ -7,13 +7,13 @@ using UnityEngine.EventSystems;
 
 namespace _Dev.Scripts.SceneSpecific.Scene1
 {
-    public class Scene1Initializer : MonoBehaviour
+    public class Scene1Initializer_original : MonoBehaviour
     {
         private LearnObjectManager _lm;
 
         public GameObject[] loPositions;
 
-        [SerializeField]  public GameObject canvasPrefab;
+        public GameObject canvasPrefab;
 
         void Start()
         {
@@ -29,7 +29,7 @@ namespace _Dev.Scripts.SceneSpecific.Scene1
                 Debug.Log(lo.ToString() + ", Asset: " + (lo.Asset != null ? lo.Asset.name : "NULL"));
             }
 
-            string[] objectDescriptions = { "Cube", "airplane", "painting", "tire", "remote control", "key", "cigarette", "guitar", "sunglasses", "Cube" };
+            string[] objectDescriptions = { "Cube", "airplane", "painting", "tire", "remote control", "Capsule", "Cube", "Sphere", "Capsule", "Cube" };
             float[] rotationAngles = { 270f, 270f, 270f, 0f, 0f, 0f, 0f, 90f, 90f, 90f };
 
             for (int i = 0; i < objectDescriptions.Length; i++)
