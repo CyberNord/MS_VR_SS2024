@@ -43,6 +43,7 @@ namespace _Dev.Scripts.SceneSpecific.TestingDB
                 LearnObject currLearnObject;
                 if (_allLearnObjectsDict.TryGetValue(identifier.Key, out currLearnObject))
                 {
+                    Debug.Log("Instantiate LearnObject: " + currLearnObject.DescEnglish);
                     SceneHelper.InstantiateLearnObject(currLearnObject.Asset, identifier.Value);
                 }
             }

@@ -46,6 +46,7 @@ namespace _Dev.Scripts.SceneSpecific.Scene1
                 i++;
                 if (_allLearnObjectsDict.TryGetValue(posPair.Key, out currLearnObject))
                 {
+                    Debug.Log("Instantiate LearnObject: " + currLearnObject.DescEnglish);
                     Quaternion rotation = currLearnObject.Asset.transform.rotation * Quaternion.Euler(0, Constants.RotationAngles[i], 0);
                     SceneHelper.InstantiateLearnObject(currLearnObject.Asset, posPair.Value, rotation);
                     InstantiateObjectWithCanvas(currLearnObject, posPair.Value, Constants.RotationAngles[i]);
