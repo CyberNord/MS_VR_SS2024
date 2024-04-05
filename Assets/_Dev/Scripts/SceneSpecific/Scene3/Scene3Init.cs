@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using _Dev.Scripts.db;
 using UnityEngine;
-using _Dev.Scripts.ObjectBehaviour;
 
-namespace _Dev.Scripts.SceneSpecific.Scene2
+namespace _Dev.Scripts.SceneSpecific.Scene3
 {
     public class Scene3Init : MonoBehaviour
     {
