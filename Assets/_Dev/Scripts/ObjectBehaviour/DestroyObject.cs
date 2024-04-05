@@ -5,7 +5,7 @@ namespace _Dev.Scripts.ObjectBehaviour
 {
     public class DestroyObject : MonoBehaviour
     {
-        private float fadeDuration = 10f;
+        private float fadeDuration = 3f;
         private float elapsedTime = 0f;
         private Renderer objectRenderer;
         private Color originalColor;
@@ -22,6 +22,7 @@ namespace _Dev.Scripts.ObjectBehaviour
         {
             if (startFade)
             {
+
                 elapsedTime += Time.deltaTime;
 
                 float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
