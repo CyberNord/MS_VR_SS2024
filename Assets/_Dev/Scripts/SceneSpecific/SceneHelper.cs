@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using _Dev.Scripts.db;
 using UnityEngine;
 using Debug = System.Diagnostics.Debug;
@@ -7,6 +8,7 @@ using UnityEngine.EventSystems;
 using _Dev.Scripts.ObjectBehaviour;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
+using System.Transactions;
 
 namespace _Dev.Scripts.SceneSpecific
 {
@@ -85,14 +87,30 @@ namespace _Dev.Scripts.SceneSpecific
 
         public static void SetUpEventTrigger(GameObject canvas, LearnObject lo)
         {
+            bool isAudioPlaying = false;
+
             EventTrigger trigger = canvas.GetComponent<EventTrigger>() ?? canvas.AddComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry
             {
                 eventID = EventTriggerType.PointerEnter,
                 callback = new EventTrigger.TriggerEvent()
             };
-            entry.callback.AddListener(_ => PlayAudio(lo.AudioClipEnglish));
+            entry.callback.AddListener(_ =>
+            {
+                if(!isAudioPlaying)
+                {
+                    PlayAudio(lo.AudioClipEnglish);
+                    isAudioPlaying = true;
+                    canvas.GetComponent<MonoBehaviour>().StartCoroutine(TriggerAudioDelay(lo.AudioClipEnglish.length, () => { isAudioPlaying = false;  }));
+                }
+            });
             trigger.triggers.Add(entry);
+        }
+
+        private static IEnumerator TriggerAudioDelay(float clipLength, Action onComplete)
+        {
+            yield return new WaitForSeconds(clipLength);
+            onComplete?.Invoke();
         }
 
         public static void ConvertMaterialToTransparent(GameObject obj)
