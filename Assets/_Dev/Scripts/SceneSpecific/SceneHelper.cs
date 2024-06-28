@@ -76,7 +76,7 @@ namespace _Dev.Scripts.SceneSpecific
 
             if (englishTextComponent != null)
             {
-                englishTextComponent.text = lo.DescEnglish;
+                englishTextComponent.text = lo.DescVimmi;
             }
 
             if (germanTextComponent != null)
@@ -99,9 +99,9 @@ namespace _Dev.Scripts.SceneSpecific
             {
                 if(!isAudioPlaying)
                 {
-                    PlayAudio(lo.AudioClipEnglish);
+                    PlayAudio(lo.AudioClipVimmi);
                     isAudioPlaying = true;
-                    canvas.GetComponent<MonoBehaviour>().StartCoroutine(TriggerAudioDelay(lo.AudioClipEnglish.length, () => { isAudioPlaying = false;  }));
+                    canvas.GetComponent<MonoBehaviour>().StartCoroutine(TriggerAudioDelay(lo.AudioClipVimmi.length, () => { isAudioPlaying = false;  }));
                 }
             });
             trigger.triggers.Add(entry);

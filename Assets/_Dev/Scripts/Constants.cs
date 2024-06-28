@@ -19,8 +19,5 @@ namespace _Dev.Scripts
         public const int FixedRandomGroup1 = 0; 
         public const int FixedRandomGroup2 = 1; 
         public const int FixedRandomGroup3 = 2; 
-        
-        //Material
-        public const string MaterialSurface = "_Surface";
     }
 }
