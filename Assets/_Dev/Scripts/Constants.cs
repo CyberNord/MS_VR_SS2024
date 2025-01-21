@@ -19,5 +19,40 @@ namespace _Dev.Scripts
         public const int FixedRandomGroup1 = 0; 
         public const int FixedRandomGroup2 = 1; 
         public const int FixedRandomGroup3 = 2; 
+        
+        // Resources
+        public static readonly string[] LearnObjectsFolder = {
+            "airplane",
+            "backpack",
+            "ball",
+            "bandage",
+            "bed",
+            "bicycle",
+            "bottle",
+            "camera",
+            "cigarette",
+            "daily_newspaper",
+            "drawer",
+            "guitar",
+            "key",
+            "letter_box",
+            "mask",
+            "monitor",
+            "painting",
+            "plate",
+            "present",
+            "purse",
+            "remote_control",
+            "ring",
+            "suitcase",
+            "sunglasses",
+            "telephone",
+            "tent",
+            "tire",
+            "traffic_light",
+            "tram",
+            "window"
+            
+        };
     }
 }
