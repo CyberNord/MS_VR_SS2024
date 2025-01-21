@@ -73,6 +73,8 @@ crashlytics-build.properties
 /*.backup
 
 # BigAssets
+/Assets/_Dev/Assets/*
+/Assets/_Dev/Assets/University Classroom
 /Assets/_Dev/Assets/Apartment Kit
 /Assets/_Dev/Assets/Brick Project Studio
 /Assets/_Dev/Assets/College Library
