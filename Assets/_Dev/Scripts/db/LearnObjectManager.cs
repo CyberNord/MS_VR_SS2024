@@ -47,7 +47,7 @@ namespace _Dev.Scripts.db
             return _learnObjects.Select(learnObject => learnObject.DescGerman).ToList();
         }
 
-        // flexible grouping
+        // flexible grouping (unused) 
         public List<LearnObject> GetLearnObjectGroup(int groupSize, int groupNumber)
         {
             if (_learnObjects.Count < groupSize)
@@ -74,9 +74,9 @@ namespace _Dev.Scripts.db
             {
                 throw new InvalidOperationException("Not enough objects to form the required groups.");
             }
+
+            var rnd = Constants.RandomizationMode ? new Random() : new Random(Constants.Seed);
             
-            const int seed = 12345;
-            var rnd = new Random(seed);
             var randomizedLearnObjects = _learnObjects.OrderBy(_=> rnd.Next()).ToList();
 
             List<LearnObject>[] groups = new List<LearnObject>[3];

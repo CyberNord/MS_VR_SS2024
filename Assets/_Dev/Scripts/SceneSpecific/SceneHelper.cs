@@ -69,26 +69,49 @@ namespace _Dev.Scripts.SceneSpecific
             return basePosition;
         }
         
+        // This class sets the translation on the Canvas
         public static void SetUpTextComponents(GameObject canvas, LearnObject lo)
         {
+            // Yea that's Confusing, however it is way too integrated at this point to change it.
+            // "English Text" = fat Text --> to Language
+            // "German_Text" = normal Text --> from Language
             TextMeshProUGUI englishTextComponent = canvas.transform.Find("English_Text").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI germanTextComponent = canvas.transform.Find("German_Text").GetComponent<TextMeshProUGUI>();
-
+            
             if (englishTextComponent != null)
             {
-                englishTextComponent.text = lo.DescVimmi;
+                englishTextComponent.text = Constants.ToLanguage switch
+                {
+                    Constants.SLanguage.English => lo.DescEnglish,
+                    Constants.SLanguage.German => lo.DescGerman,
+                    Constants.SLanguage.Vimmi => lo.DescVimmi,
+                    _ => lo.DescVimmi
+                };
             }
 
             if (germanTextComponent != null)
             {
-                germanTextComponent.text = lo.DescGerman;
+                germanTextComponent.text = Constants.FromLanguage switch
+                {
+                    Constants.SLanguage.English => lo.DescEnglish,
+                    Constants.SLanguage.German => lo.DescGerman,
+                    Constants.SLanguage.Vimmi => lo.DescVimmi,
+                    _ => lo.DescGerman
+                };
             }
         }
 
         public static void SetUpEventTrigger(GameObject canvas, LearnObject lo)
         {
             bool isAudioPlaying = false;
-
+            var clip = Constants.ToLanguage switch
+            {
+                Constants.SLanguage.English => lo.AudioClipEnglish,
+                Constants.SLanguage.German => lo.AudioClipGerman,
+                Constants.SLanguage.Vimmi => lo.AudioClipVimmi,
+                _ => lo.AudioClipVimmi
+            };
+            
             EventTrigger trigger = canvas.GetComponent<EventTrigger>() ?? canvas.AddComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry
             {
@@ -99,9 +122,9 @@ namespace _Dev.Scripts.SceneSpecific
             {
                 if(!isAudioPlaying)
                 {
-                    PlayAudio(lo.AudioClipVimmi);
+                    PlayAudio(clip);
                     isAudioPlaying = true;
-                    canvas.GetComponent<MonoBehaviour>().StartCoroutine(TriggerAudioDelay(lo.AudioClipVimmi.length, () => { isAudioPlaying = false;  }));
+                    canvas.GetComponent<MonoBehaviour>().StartCoroutine(TriggerAudioDelay(clip.length, () => { isAudioPlaying = false;  }));
                 }
             });
             trigger.triggers.Add(entry);

@@ -2,6 +2,12 @@ namespace _Dev.Scripts
 {
     public static class Constants
     {
+        // Start Options
+        public static GameState SelectedScene = GameState.M2;
+        public static bool RandomizationMode = false;
+        public static SLanguage FromLanguage = SLanguage.German;
+        public static SLanguage ToLanguage = SLanguage.Vimmi; 
+        
         // DB default Strings 
         public const string ResourcesPath = "Resources/LearnObjects";
         
@@ -19,6 +25,25 @@ namespace _Dev.Scripts
         public const int FixedRandomGroup1 = 0; 
         public const int FixedRandomGroup2 = 1; 
         public const int FixedRandomGroup3 = 2; 
+        
+        // LearnObject Manager Constants
+        public const int Seed = 12345; //fixed Seed
+        
+        // Enums 
+        public enum GameState
+        {
+            StartMenu, 
+            M1,
+            M2,
+            M3
+        }
+        
+        public enum SLanguage
+        {
+            English,
+            German,
+            Vimmi
+        }
         
         // Resources
         public static readonly string[] LearnObjectsFolder = {
