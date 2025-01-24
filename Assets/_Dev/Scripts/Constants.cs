@@ -9,6 +9,7 @@ namespace _Dev.Scripts
         public static SLanguage ToLanguage = SLanguage.Vimmi; 
         
         // DB default Strings 
+        
         public const string ResourcesPath = "Resources/LearnObjects";
         
         public const string GermanAudioFile = "ger";

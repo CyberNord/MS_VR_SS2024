@@ -9,16 +9,33 @@ namespace _Dev.Scripts.db
     public static class ResourcesLoader
     {
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        
+        public static void PreloadResources()
+        {
+            var allObjects = Resources.LoadAll("LearnObjects");
+            foreach (var obj in allObjects)
+            {
+                Debug.Log($"Preloaded: {obj.name}");
+            }
+        }
+        
         private static void ValidateResources()
         {
+            
+            var assets = Resources.LoadAll("LearnObjects");
+            foreach (var asset in assets)
+            {
+                Debug.Log($"Loaded asset: {asset.name}");
+            }
+            
             foreach (string folder in Constants.LearnObjectsFolder)
             {
                 // Load each asset type
-                var objectPath = "LearnObjects\\" + folder + "\\" + folder; 
-                var audioGerPath = "LearnObjects\\" + folder + "\\" + Constants.GermanAudioFile;
-                var audioEngPath = "LearnObjects\\" + folder + "\\" + Constants.EnglishAudioFile;
-                var audioVimPath = "LearnObjects\\" + folder + "\\" + Constants.VimmiAudioFile;
-                var textPath = "LearnObjects\\" + folder + "\\" + Constants.VocabelTextFile;
+                var objectPath = "LearnObjects/" + folder + "/" + folder;
+                var audioGerPath = "LearnObjects/" + folder + "/" + Constants.GermanAudioFile;
+                var audioEngPath = "LearnObjects/" + folder + "/" + Constants.EnglishAudioFile;
+                var audioVimPath = "LearnObjects/" + folder + "/" + Constants.VimmiAudioFile;
+                var textPath = "LearnObjects/" + folder + "/" + Constants.VocabelTextFile;
 
                 // Check if assets exist
                 var obj = Resources.Load<GameObject>(objectPath);
