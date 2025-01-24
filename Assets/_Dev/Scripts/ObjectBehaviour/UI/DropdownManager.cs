@@ -91,8 +91,7 @@ namespace _Dev.Scripts.ObjectBehaviour.UI
             Debug.Log($"Selected To Language: {_toLanguage}");
         }
 
-
-        private void UpdateSettings()
+        public void UpdateSettings()
         {
             Constants.SelectedScene = _selectedScene;
             Constants.RandomizationMode = _randomizationMode;
