@@ -18,37 +18,13 @@ namespace _Dev.Scripts.db
             _learnObjectManager = learnObjectManager;
         }
         
-        // private static List<string> GetResFolders()
-        // {
-        //     var path = Path.Combine(Application.dataPath, Constants.ResourcesPath);
-        //     
-        //     if (!Directory.Exists(path))
-        //     {
-        //         Debug.LogError("Directory does not exist: " + path);
-        //         return new List<string>(); 
-        //     }
-        //     
-        //     try
-        //     {
-        //         var directoryEntries = Directory.GetDirectories(path);
-        //         return directoryEntries.Select(directory => new DirectoryInfo(directory))
-        //             .Select(dirInfo => dirInfo.Name).ToList();
-        //     }
-        //     catch (System.Exception ex)
-        //     {
-        //         Debug.LogError("An error occurred while trying to retrieve directory names: " + ex.Message);
-        //         return new List<string>();
-        //     }
-        // }
-        
-        //alternative
+        // Dynamically load all assets in the LearnObjects folder
         private static List<string> GetResFolders()
         {
             try
             {
-                // Dynamically load all assets in the LearnObjects folder
-                var resourcePaths = Constants.LearnObjectsFolder; // List of predefined folders in Constants
-                return resourcePaths.ToList(); // Return as-is since the folder names are predefined
+                var resourcePaths = Constants.LearnObjectsFolder; 
+                return resourcePaths.ToList();
             }
             catch (System.Exception ex)
             {
