@@ -18,6 +18,7 @@ namespace _Dev.Scripts.SceneSpecific
     /// </summary>
     public class SceneHelper : MonoBehaviour
     {
+        static bool _isAudioPlaying = false;
         
         public static GameObject InstantiateLearnObject(GameObject learnObject, GameObject pos, Quaternion rotation = default)
         {
@@ -104,7 +105,7 @@ namespace _Dev.Scripts.SceneSpecific
 
         public static void SetUpEventTrigger(GameObject canvas, LearnObject lo)
         {
-            bool isAudioPlaying = false;
+            
             var clip = Constants.ToLanguage switch
             {
                 Constants.SLanguage.English => lo.AudioClipEnglish,
@@ -121,11 +122,11 @@ namespace _Dev.Scripts.SceneSpecific
             };
             entry.callback.AddListener(_ =>
             {
-                if(!isAudioPlaying)
+                if(!_isAudioPlaying)
                 {
                     PlayAudio(clip);
-                    isAudioPlaying = true;
-                    canvas.GetComponent<MonoBehaviour>().StartCoroutine(TriggerAudioDelay(clip.length, () => { isAudioPlaying = false;  }));
+                    _isAudioPlaying = true;
+                    canvas.GetComponent<MonoBehaviour>().StartCoroutine(TriggerAudioDelay(clip.length, () => { _isAudioPlaying = false;  }));
                 }
             });
             trigger.triggers.Add(entry);
