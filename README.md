@@ -65,6 +65,37 @@ At runtime, the backend loads these assets, creates `LearnObject` instances, and
    - Enter **Play Mode** in `StartMenu.unity`, choose mode and language, press **Start**
    - Or **Build & Run** for PC-VR
 
+### 4.1) external Assets
+**Path**
+/Assets/_Dev/Assets/...
+
+**Assets**
+
+1. [Apartment Kit](https://assetstore.unity.com/packages/3d/environments/apartment-kit-124055)
+2. [Bandage](https://sketchfab.com/3d-models/bandage-86276f80e946430d9fff7d905bf056b1)
+3. [Bicycle Models](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-bicycle-5-262688)
+4. [Brick Project Studio](url) // TODO: add Link
+5. [Bush-Craft Extension Pack](https://assetstore.unity.com/packages/3d/props/tools/bush-craft-extension-pack-84435)
+6. [cigarette-free](https://sketchfab.com/3d-models/cigarette-free-15b26bb294aa448a86231d96f85fa06c#download)
+7. [Civil Transport Aircraft](https://assetstore.unity.com/packages/3d/vehicles/air/civil-transport-aircraft-194516)
+8. [College Library](https://assetstore.unity.com/packages/3d/props/interior/college-library-177576)
+9. [Hospital Laboratory](https://assetstore.unity.com/packages/3d/props/interior/hospital-laboratory-54382)
+10. [Japanese Garden Pack](https://assetstore.unity.com/packages/3d/props/japanese-zen-garden-pack-69167)
+11. [old-tv-remote-control](https://sketchfab.com/3d-models/old-tv-remote-control-6277be1ddd5f4efb9d872ca7783c87d8)
+12. [PBR_Letter_Boxes](https://assetstore.unity.com/packages/3d/environments/urban/pbr-letter-box-and-stamps-automat-177395)
+13. [Post Box](https://assetstore.unity.com/packages/3d/post-box-9182)
+14. [Presents](https://assetstore.unity.com/packages/3d/props/interior/christmas-and-birthday-presents-pack-157090)
+15. [Rings](https://assetstore.unity.com/packages/3d/props/clothing/accessories/weathered-rings-42394)
+16. [Soccer Ball](https://assetstore.unity.com/packages/3d/low-polygon-soccer-ball-84382)
+17. [Street_Vehicles_Pack_Autobus_Tram](https://assetstore.unity.com/packages/3d/vehicles/land/street-vehicles-pack-autobus-tram-213421)
+18. [Suitcase 3D free](https://assetstore.unity.com/packages/3d/props/interior/suitcase-3d-free-264886)
+19. [Tarbo-CITY-TrafficLights](https://assetstore.unity.com/packages/3d/environments/urban/city-traffic-lights-pack-free-low-poly-3d-art-154053)
+20. [Tents](https://assetstore.unity.com/packages/3d/props/exterior/tents-21461)
+21. [Tires](https://assetstore.unity.com/packages/3d/props/3d-tire-102580)
+22. [University Classroom](https://assetstore.unity.com/packages/3d/props/interior/university-classroom-86107)
+23. [Sunglasses](https://sketchfab.com/3d-models/sunglasses-free-3b31fcf2f9e54b9ca86e0e29ca86d3fb#download)
+24. [Camera](https://sketchfab.com/3d-models/camera-fed-5-d7db535e2fd944f584ebe2b0f5bb0583)
+
 ---
 
 <img width="497" height="221" alt="sample_msc_combo-ger" src="https://github.com/user-attachments/assets/8bce4300-3276-4829-87ed-7ff93415fa0c" />
